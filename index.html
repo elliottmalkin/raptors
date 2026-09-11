@@ -521,9 +521,6 @@
     .game-date-block { display: block; }
     .game-header { align-items: flex-start; }
   }
-
-  /* Belt-and-suspenders: hide any floating Netlify Identity badge the CDN may inject */
-  #netlify-identity-widget { display: none !important; }
 </style>
 </head>
 <body>
@@ -558,13 +555,6 @@
   </div>
   <button class="btn-admin-action" onclick="handleAdminAuth()">Sign Out</button>
 </div>
-
-<!-- Prevents Netlify Identity Widget (CDN-injected) from creating its floating badge.
-     The widget uses this as its trigger button instead of creating its own. -->
-<button data-netlify-identity-button
-        aria-hidden="true" tabindex="-1"
-        style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;pointer-events:none">
-</button>
 
 <!-- ── SIGNUP MODAL ── -->
 <div class="modal-backdrop" id="modalBackdrop">
