@@ -136,6 +136,7 @@ export default async () => {
 
     const prettyDate = friendlyDate(game.isoDate);
     const msg =
+      `Raptors Snacks\n\n` +
       `Hi ${signup.name}!\n\n` +
       `Reminder: you signed up to bring the post-game snack for:\n\n` +
       `Raptors vs ${game.opponent} on ${prettyDate}.\n\n` +

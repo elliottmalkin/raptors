@@ -521,6 +521,9 @@
     .game-date-block { display: block; }
     .game-header { align-items: flex-start; }
   }
+
+  /* Belt-and-suspenders: hide any floating Netlify Identity badge the CDN may inject */
+  #netlify-identity-widget { display: none !important; }
 </style>
 </head>
 <body>
@@ -555,6 +558,13 @@
   </div>
   <button class="btn-admin-action" onclick="handleAdminAuth()">Sign Out</button>
 </div>
+
+<!-- Prevents Netlify Identity Widget (CDN-injected) from creating its floating badge.
+     The widget uses this as its trigger button instead of creating its own. -->
+<button data-netlify-identity-button
+        aria-hidden="true" tabindex="-1"
+        style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;pointer-events:none">
+</button>
 
 <!-- ── SIGNUP MODAL ── -->
 <div class="modal-backdrop" id="modalBackdrop">
@@ -722,22 +732,17 @@ let isAdmin      = false;    // true once Netlify Identity confirms admin
 let lastToken    = null;     // token generated after a parent signs up
 
 // ── NETLIFY IDENTITY (ADMIN AUTH) ─────────────────────────────────────────────
-// Lazy-loaded on demand so the widget script never runs for regular visitors
-// (which eliminates the "Powered by Netlify" badge entirely).
+// Lazy-loaded on demand so the widget script (and its badge) never runs
+// for regular visitors. If Netlify's CDN injects the script automatically,
+// boot() detects it and sets up listeners immediately.
 let identityReady = false;
 
 function setupIdentity() {
   if (identityReady) return;
   identityReady = true;
-  netlifyIdentity.on('login', user => {
-    setAdminMode(true, user.email);
-    netlifyIdentity.close();
-    render();
-  });
-  netlifyIdentity.on('logout', () => {
-    setAdminMode(false);
-    render();
-  });
+  netlifyIdentity.on('init',   user => { if (user) setAdminMode(true, user.email); });
+  netlifyIdentity.on('login',  user => { setAdminMode(true, user.email); netlifyIdentity.close(); render(); });
+  netlifyIdentity.on('logout', ()   => { setAdminMode(false); render(); });
   netlifyIdentity.init();
 }
 
@@ -1232,6 +1237,10 @@ document.addEventListener('keydown', e => {
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
 async function boot() {
+  // If Netlify CDN auto-injected the Identity Widget, set up our listeners now.
+  // Otherwise it will be lazy-loaded when the admin clicks the login link.
+  if (window.netlifyIdentity) setupIdentity();
+
   // Load games and signups in parallel
   try {
     const [gamesRes, signupsRes] = await Promise.all([
