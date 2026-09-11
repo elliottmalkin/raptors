@@ -1,0 +1,9 @@
+{
+  "name": "raptors-snacks",
+  "version": "1.0.0",
+  "description": "Post-game snack signup for Raptors Fall 2026",
+  "private": true,
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}

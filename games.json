@@ -1,0 +1,97 @@
+[
+  {
+    "id": 1,
+    "date": "Sun, Sep 13",
+    "isoDate": "2026-09-13",
+    "time": "12:00 PM",
+    "opponent": "Hyde Park United Hammerheads",
+    "home": false,
+    "location": "Creek Rd, Poughkeepsie, NY",
+    "mapQuery": "343 Creek Road, Poughkeepsie, NY"
+  },
+  {
+    "id": 2,
+    "date": "Sun, Sep 20",
+    "isoDate": "2026-09-20",
+    "time": "12:00 PM",
+    "opponent": "Athletic SC Saugerties",
+    "home": true,
+    "location": "Starr Park"
+  },
+  {
+    "id": 3,
+    "date": "Sun, Sep 27",
+    "isoDate": "2026-09-27",
+    "time": "12:30 PM",
+    "opponent": "Southern Ulster FC Thundercats",
+    "home": false,
+    "location": "11 Patura Rd, Field #3",
+    "mapQuery": "11 Patura Rd, Highland, NY"
+  },
+  {
+    "id": 4,
+    "date": "Sun, Oct 4",
+    "isoDate": "2026-10-04",
+    "time": "1:15 PM",
+    "opponent": "Town of Poughkeepsie Striker",
+    "home": true,
+    "location": "Starr Park"
+  },
+  {
+    "id": 5,
+    "date": "Sun, Oct 18",
+    "isoDate": "2026-10-18",
+    "time": "1:15 PM",
+    "opponent": "Red Hook Soccer Club Landslide",
+    "home": true,
+    "location": "Starr Park"
+  },
+  {
+    "id": 6,
+    "date": "Sun, Oct 25",
+    "isoDate": "2026-10-25",
+    "time": "12:00 PM",
+    "opponent": "New Paltz Travel Soccer Scorpions",
+    "home": false,
+    "location": "1 Eugene L Brown Dr, New Paltz, NY",
+    "mapQuery": "1 Eugene L Brown Dr, New Paltz, NY"
+  },
+  {
+    "id": 7,
+    "date": "Sun, Nov 1",
+    "isoDate": "2026-11-01",
+    "time": "1:15 PM",
+    "opponent": "K Thunder Boys",
+    "home": true,
+    "location": "Starr Park"
+  },
+  {
+    "id": 8,
+    "date": "Sun, Nov 8",
+    "isoDate": "2026-11-08",
+    "time": "12:00 PM",
+    "opponent": "Athletic SC Saugerties",
+    "home": false,
+    "location": "8 Small World Ave, Saugerties, NY",
+    "mapQuery": "8 Small World Ave, Saugerties, NY 12477"
+  },
+  {
+    "id": 9,
+    "date": "Sun, Nov 15",
+    "isoDate": "2026-11-15",
+    "time": "1:15 PM",
+    "opponent": "Southern Ulster FC Thundercats",
+    "home": true,
+    "location": "Starr Park"
+  },
+  {
+    "id": 10,
+    "date": "Sun, Nov 22",
+    "isoDate": "2026-11-22",
+    "time": "1:15 PM",
+    "opponent": "Town of Poughkeepsie Striker",
+    "home": false,
+    "location": "Greenvale Park, Field #5",
+    "mapQuery": "Greenvale Park, Poughkeepsie, NY"
+  }
+]

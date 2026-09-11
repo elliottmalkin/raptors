@@ -1,0 +1,13 @@
+# netlify.toml
+
+[build]
+  publish   = "."
+  functions = "netlify/functions"
+
+[functions."send-reminders"]
+  schedule = "0 13 * * *"   # 1:00 PM UTC daily = 9 AM Eastern (EDT)
+
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
