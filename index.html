@@ -340,6 +340,7 @@
     font-family: 'DM Serif Display', serif;
     font-size: 1.62rem;
     font-weight: 400;
+    line-height: 1.1;
   }
   .modal-game-info p { font-size: 16px; color: var(--grey); margin-top: 4px; }
 
@@ -524,7 +525,8 @@
   }
 
   /* Hide Netlify Identity Widget badge */
-  [data-netlify-identity-button] { display: none !important; }
+  [data-netlify-identity-button],
+  #netlify-identity-widget { display: none !important; }
 </style>
 </head>
 <body>
@@ -1252,6 +1254,18 @@ async function boot() {
 }
 
 boot();
+
+// Hide Netlify Identity Widget badge (it injects asynchronously)
+(function hideIdentityBadge() {
+  const sel = '[data-netlify-identity-button]';
+  const el = document.querySelector(sel);
+  if (el) { el.style.display = 'none'; return; }
+  const obs = new MutationObserver(() => {
+    const btn = document.querySelector(sel);
+    if (btn) { btn.style.display = 'none'; obs.disconnect(); }
+  });
+  obs.observe(document.body, { childList: true, subtree: true });
+})();
 </script>
 </body>
 </html>
