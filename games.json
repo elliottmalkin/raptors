@@ -1,5 +1,15 @@
 [
   {
+    "id": 0,
+    "date": "Sat, Sep 12",
+    "isoDate": "2026-09-12",
+    "time": "10:00 AM",
+    "opponent": "TEST",
+    "home": true,
+    "location": "Starr Park",
+    "test": true
+  },
+  {
     "id": 1,
     "date": "Sun, Sep 13",
     "isoDate": "2026-09-13",
