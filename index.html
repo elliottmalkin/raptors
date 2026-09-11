@@ -7,8 +7,6 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<!-- Netlify Identity Widget -->
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <style>
   :root {
     --green: #1a3a2a;
@@ -523,10 +521,6 @@
     .game-date-block { display: block; }
     .game-header { align-items: flex-start; }
   }
-
-  /* Hide Netlify Identity Widget badge */
-  [data-netlify-identity-button],
-  #netlify-identity-widget { display: none !important; }
 </style>
 </head>
 <body>
@@ -559,7 +553,7 @@
     <span class="admin-label">Admin Mode</span>
     <span class="admin-name" id="adminEmail"></span>
   </div>
-  <button class="btn-admin-action" onclick="netlifyIdentity.logout()">Sign Out</button>
+  <button class="btn-admin-action" onclick="handleAdminAuth()">Sign Out</button>
 </div>
 
 <!-- ── SIGNUP MODAL ── -->
@@ -728,25 +722,36 @@ let isAdmin      = false;    // true once Netlify Identity confirms admin
 let lastToken    = null;     // token generated after a parent signs up
 
 // ── NETLIFY IDENTITY (ADMIN AUTH) ─────────────────────────────────────────────
-netlifyIdentity.on('init', user => {
-  if (user) setAdminMode(true, user.email);
-});
-netlifyIdentity.on('login', user => {
-  setAdminMode(true, user.email);
-  netlifyIdentity.close();
-  render();
-});
-netlifyIdentity.on('logout', () => {
-  setAdminMode(false);
-  render();
-});
+// Lazy-loaded on demand so the widget script never runs for regular visitors
+// (which eliminates the "Powered by Netlify" badge entirely).
+let identityReady = false;
+
+function setupIdentity() {
+  if (identityReady) return;
+  identityReady = true;
+  netlifyIdentity.on('login', user => {
+    setAdminMode(true, user.email);
+    netlifyIdentity.close();
+    render();
+  });
+  netlifyIdentity.on('logout', () => {
+    setAdminMode(false);
+    render();
+  });
+  netlifyIdentity.init();
+}
+
+function loadIdentityWidget(cb) {
+  if (window.netlifyIdentity) { cb(); return; }
+  const s = document.createElement('script');
+  s.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+  s.onload = cb;
+  document.head.appendChild(s);
+}
 
 function handleAdminAuth() {
-  if (isAdmin) {
-    netlifyIdentity.logout();
-  } else {
-    netlifyIdentity.open('login');
-  }
+  if (isAdmin) { netlifyIdentity.logout(); return; }
+  loadIdentityWidget(() => { setupIdentity(); netlifyIdentity.open('login'); });
 }
 
 function setAdminMode(on, email) {
@@ -1227,8 +1232,6 @@ document.addEventListener('keydown', e => {
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
 async function boot() {
-  netlifyIdentity.init();
-
   // Load games and signups in parallel
   try {
     const [gamesRes, signupsRes] = await Promise.all([
@@ -1254,18 +1257,6 @@ async function boot() {
 }
 
 boot();
-
-// Hide Netlify Identity Widget badge (it injects asynchronously)
-(function hideIdentityBadge() {
-  const sel = '[data-netlify-identity-button]';
-  const el = document.querySelector(sel);
-  if (el) { el.style.display = 'none'; return; }
-  const obs = new MutationObserver(() => {
-    const btn = document.querySelector(sel);
-    if (btn) { btn.style.display = 'none'; obs.disconnect(); }
-  });
-  obs.observe(document.body, { childList: true, subtree: true });
-})();
 </script>
 </body>
 </html>

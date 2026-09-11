@@ -102,8 +102,10 @@ export default async () => {
     if (!game.isoDate || game.isoDate === 'TBD') continue;
 
     const days = daysUntil(game.isoDate);
-    console.log(`game-${game.id} (${game.opponent}): isoDate=${game.isoDate} days=${days}`);
     if (days < 1) continue;
+
+    // Only log upcoming games (days >= 1) to keep daily logs concise
+    console.log(`game-${game.id} (${game.opponent}): isoDate=${game.isoDate} days=${days}`);
 
     let raw;
     try {

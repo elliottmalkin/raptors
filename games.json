@@ -43,7 +43,7 @@
     "date": "Sun, Oct 4",
     "isoDate": "2026-10-04",
     "time": "1:15 PM",
-    "opponent": "Town of Poughkeepsie Striker",
+    "opponent": "Town of Poughkeepsie Strikers",
     "home": true,
     "location": "Starr Park"
   },
@@ -99,7 +99,7 @@
     "date": "Sun, Nov 22",
     "isoDate": "2026-11-22",
     "time": "1:15 PM",
-    "opponent": "Town of Poughkeepsie Striker",
+    "opponent": "Town of Poughkeepsie Strikers",
     "home": false,
     "location": "Greenvale Park, Field #5",
     "mapQuery": "Greenvale Park, Poughkeepsie, NY"
